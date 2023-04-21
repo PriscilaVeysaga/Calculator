@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+
+import Home from './src/screens/Home';
+import { dark, light } from './src/themes';
 
 export default function App() {
+  const [theme, setTheme] = useState(light);
+
+  const toggleTheme = () => {
+    setTheme(theme.title === 'light' ? dark : light);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme = {theme}>
+      <Home toggleTheme = {toggleTheme} />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
