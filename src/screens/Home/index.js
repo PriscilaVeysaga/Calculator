@@ -30,6 +30,16 @@ export default ({toggleTheme}) => {
       '/': function (x, y) {
         return x / y;
       },
+      'x²': function (x) {
+        return x ** 2
+      },
+      'x³': function (x) {
+        return x ** 3
+      },
+      'x^y': function (x, y) {
+        return x ** y
+      }
+
     };
 
     if (curNum !== '') {
@@ -63,6 +73,18 @@ export default ({toggleTheme}) => {
       setInput(input + e);
     }
   };
+  
+  const handleExponent = () => {
+    if (input === "x²") {
+      setCurNum(curNum ** 2);
+    }
+    if (input === "x³") {
+      setCurNum(curNum ** 3);
+    }
+    if (input === "x^y") {
+      setCurNum(prevNum ** curNum)
+    }
+  };
 
   const handleClear = () => {
     setInput('');
@@ -87,7 +109,7 @@ export default ({toggleTheme}) => {
   }
 
   const clickButton = e => {
-    if (e === '+' || e === '-' || e === '/' || e === '*') {
+    if (e === '+' || e === '-' || e === '/' || e === '*' || e === 'x²' || e === 'x³' || e === 'x^y') {
       operation_Func(e);
     } else if (e === 'AC') {
       handleClear();
@@ -99,12 +121,22 @@ export default ({toggleTheme}) => {
       addDecimalToInput(e);
     } else if (e === 'backspace') {
       handleBackspace();
+
+    } else if (e === 'x²'){
+      handleExponent();
+    } else if (e === 'x³'){
+    handleExponent();
+    } else if (e === 'x^y'){
+    handleExponent();
+
+
     } else if (e === '=') {
       solve();
     } else {
       setInput(input + e);
     }
   };
+  
 
   return (
     <Container colors={[colors.primary, colors.secondary]} locations={[0, 0.8]}>
@@ -128,6 +160,26 @@ export default ({toggleTheme}) => {
       </SwitchArea>
 
       <CustomScreen inputValue={input} />
+
+      <RowButtonArea>
+        <CustomButtom 
+          value="x²" 
+          color={colors.colorFunctionSecondary}
+          onPress = {() => clickButton ('x²')} 
+        />
+
+        <CustomButtom 
+          value="x³" 
+          color={colors.colorFunctionSecondary}
+          onPress = {() => clickButton ('x³')} 
+        />
+
+        <CustomButtom 
+          value="x^y" 
+          color={colors.colorFunctionSecondary}
+          onPress = {() => clickButton ('x^y')} 
+        />
+      </RowButtonArea>
 
       <RowButtonArea>
         <CustomButtom
